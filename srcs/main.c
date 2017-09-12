@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/10 22:14:10 by sclolus           #+#    #+#             */
-/*   Updated: 2017/09/11 11:24:40 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/09/12 12:12:23 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,36 +73,31 @@ int	main(int argc, char **argv)
 /* 	vertices_test[0] = ft_perspective_transformation(vertices_test[0]); */
 /* 	vertices_test[1] = ft_perspective_transformation(vertices_test[1]); */
 /* 	vertices_test[2] = ft_perspective_transformation(vertices_test[2]); */
-	t_vec		vs[] = {{100, 100, 10, 1}, {100, 1000, 10, 1}, {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 100, 1}, {WINDOW_WIDTH - 100, 100, 10, 1}, {WINDOW_WIDTH - 100, 1000, 10, 1}, {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 100, 1}};
-	t_polygone	polygones[2] = {{vs, NULL, NULL, 3, 0xFF0000}, {vs + 3, NULL, NULL, 3, 0x0000FF}};
-	t_obj		obj_test = (t_obj){vs, polygones, NULL, 2, 6, 0};
-	t_vec	translation = {0, 10, 1, 0};
-	t_vec	scaling = {1.0f, 1.0f, 1.5f, 0};
+	t_vec		vs[] = {{100, 100, 10, 1}, {100, 1000, 10, 1}, {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 200, 1}, {WINDOW_WIDTH - 100, 100, 10, 1}, {WINDOW_WIDTH - 100, 1000, 10, 1}, {WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, 200, 1}};
+	t_vec		vs_t[6];
+	t_polygone	polygones[2] = {{vs, vs_t, NULL, 3, 0xFF0000, {0}}, {vs + 3, vs_t + 3, NULL, 3, 0x0000FF, {0}}};
+	t_obj		obj_test = (t_obj){vs, vs_t, polygones, NULL, 2, 6, 0};
+	t_vec	translation = {500, 10, 1.0f, 0};
+	t_vec	scaling = {10.0f, 10.0f, 10.0f, 0};
 /* //	t_vec	scaling = {1, 1, 1, 0}; */
 	(void)translation;
 	(void)scaling;
 
-
 /* 	ft_draw_polygone(&(t_polygone){vertices, NULL, NULL, 3, 0xF000F0}, &mlx_data); */
 /* 	ft_draw_polygone(&(t_polygone){vertices_test, NULL, NULL, 3, 0xF000F0}, &mlx_data); */
-	ft_obj_translation(&obj_test, translation);
-	ft_obj_scaling(&obj_test, scaling);
-/*  	ft_obj_perspective_transformation(&obj_test); */
+/* 	ft_obj_translation(&obj_test, translation); */
+/* 	ft_obj_scaling(&obj_test, scaling); */
 //	sleep(3);
 	(void)ft_set_mlx_hooks;
+	ft_obj_scaling(&obj_test, scaling);
+//	ft_obj_perspective_transformation(&obj_test);
 
-	uint32_t	color = 100;
-	while (42)
-	{
-		obj_test.polygones[0].color += color++;
-		obj_test.polygones[1].color += color++;
-		ft_draw_obj(&obj_test, &mlx_data);
-		mlx_put_image_to_window(mlx_data.connector, mlx_data.win
-								, mlx_data.frame->frame, 0, 0);
-		printf("test\n");
-		ft_set_mlx_hooks(&mlx_data, (void*[]){&mlx_data});
-//		mlx_loop(mlx_data.connector);
-	}
+	ft_draw_obj(&obj_test, &mlx_data);
+	mlx_put_image_to_window(mlx_data.connector, mlx_data.win
+							, mlx_data.frame->frame, 0, 0);
+	printf("test\n");
+	ft_set_mlx_hooks(&mlx_data, (void*[]){&mlx_data, &obj_test});
+	mlx_loop(mlx_data.connector);
 
 
 //	return (0);

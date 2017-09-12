@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/10 21:54:49 by sclolus           #+#    #+#             */
-/*   Updated: 2017/09/11 11:19:36 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/09/12 12:16:12 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ typedef void* t_mlx_ptr;
 # define WINDOW_NAME "fdf"
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
+
+# define MOVE_COEFF 10.0f
 
 typedef struct	s_vec
 {
@@ -94,17 +96,19 @@ typedef struct	s_polygone
 	t_vec		*vertices;
 	t_vec		*result_vertices;
 	t_vec		*texture_vertices;
-	uint32_t	nbr_vec;
+	uint64_t	nbr_vec;
 	int			color;
+	char		pad[4];
 }				t_polygone;
 
 typedef struct	s_obj
 {
 	t_vec		*vertices;
+	t_vec		*result_vertices;
 	t_polygone	*polygones;
 	void		*texture_buffer;
-	uint32_t	nbr_poly;
-	uint32_t	nbr_vs;
+	uint64_t	nbr_poly; //
+	uint64_t	nbr_vs; //
 	uint64_t	flags;
 }				t_obj;
 
@@ -133,8 +137,8 @@ float		ft_max_float(const float a, const float b);
 ** Rasterizing
 */
 
-# define N_DISTANCE 5.0f
-# define F_DISTANCE 10.0f
+# define N_DISTANCE -1.0f
+# define F_DISTANCE 1.0f
 
 t_vec		ft_translation(t_vec vertex, const t_vec translation);
 t_vec		ft_scaling(t_vec vertex, const t_vec scaling);
@@ -156,7 +160,7 @@ t_vec		ft_multiply_scalar_vertex(t_vec vertex, float scalar);
 ** Key handling
 */
 
-# define NBR_KEY_HOOKS 1
+# define NBR_KEY_HOOKS 5
 # define FUCK_NORME " number provided in macro expansion"
 # define INVALID_KEYS_HOOKS_NBR "Invalid keys_hooks" FUCK_NORME
 
@@ -166,6 +170,10 @@ int							ft_handler_keys(int keycode, void *param);
 int							ft_handler_keys_release(int keycode
 										, void * __attribute__((unused))param);
 NORETURN					ft_handler_esc(void * __attribute__((unused))param);
+void						ft_handler_w(void *param);
+void						ft_handler_a(void *param);
+void						ft_handler_s(void *param);
+void						ft_handler_d(void *param);
 /* void						ft_handler_right(void *param); */
 /* void						ft_handler_left(void *param); */
 /* void						ft_handler_down(void *param); */

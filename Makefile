@@ -15,7 +15,11 @@ SRC= srcs/main.c \
 	srcs/ft_draw_obj.c \
 	srcs/ft_obj_translation.c \
 	srcs/ft_obj_scaling.c \
-	srcs/ft_obj_perspective_transformation.c
+	srcs/ft_obj_perspective_transformation.c \
+	srcs/ft_handler_a.c \
+	srcs/ft_handler_s.c \
+	srcs/ft_handler_d.c \
+	srcs/ft_handler_w.c
 # 	srcs/ft_handler_right.c \
 # 	srcs/ft_handler_left.c \
 # 	srcs/ft_handler_up.c \
