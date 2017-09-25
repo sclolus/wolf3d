@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/10 21:54:49 by sclolus           #+#    #+#             */
-/*   Updated: 2017/09/25 02:32:05 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/09/25 09:47:14 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include "mlx.h"
 # include <stdio.h> //
 # include <math.h>
+# include <stdbool.h>
 # include <unistd.h> //
 
 typedef void* t_mlx_win;
@@ -28,10 +29,13 @@ typedef void* t_mlx_ptr;
 # define WINDOW_NAME "wolf3d"
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
-# define BASE_DISTANCE 0.001f
+# define BASE_DISTANCE 0.002f
 
 # define MOVE_COEFF 0.1f
-# define ROTATION_COEFF (float)M_PI / WINDOW_WIDTH * 100
+# define ROTATION_COEFF (float)M_PI / WINDOW_WIDTH * 90
+
+# define FOV 90.0f
+# define ABS(x) (x < 0 ? -x: x)
 
 typedef struct	s_vec
 {
@@ -94,15 +98,31 @@ typedef struct	s_block
 /* 	float			width; */
 /* 	float			depth; */
 	t_block_type	type;
+	int				blocking; // bool
 /* 	void			*texture; */
 }				t_block;
+
+typedef struct	s_skybox
+{
+	void		*skybox;
+	int			width;
+	int			height;
+}				t_skybox;
 
 typedef struct	s_map
 {
 	uint64_t		width;
 	uint64_t		height;
 	t_block			*buffer;
+	t_skybox		skybox;
 }				t_map;
+
+typedef struct	s_texture
+{
+	void		*texture;
+	int			width;
+	int			height;
+}				t_texture;
 
 typedef struct	s_player
 {
@@ -122,7 +142,12 @@ t_image_frame	*ft_get_image_frames(t_mlx_ptr connector, uint32_t nbr_frames);
 ** World
 */
 
-t_map		*ft_get_world_map(void);
+# define TEXTURE_DIR "textures/"
+# define SKYBOX_FILENAME TEXTURE_DIR "skybox.xpm"
+# define BLOCK_FILENAME TEXTURE_DIR "block.xpm"
+
+t_map		*ft_get_world_map(t_mlx_data *data);
+t_texture	*ft_get_textures(t_mlx_data *data);
 
 /*
 ** Rendering
@@ -130,6 +155,7 @@ t_map		*ft_get_world_map(void);
 
 void		ft_plot_pixel(const uint32_t x, const uint32_t y, int *image, const int color);
 void		ft_raycasting(t_mlx_data *data, t_player *player);
+void		ft_apply_skybox(t_mlx_data *data, t_player *player, t_map *map);
 
 /*
 ** Key handling
@@ -200,5 +226,7 @@ int							ft_handler_mouse_motion(int x, int y, void *param);
 # define MLX_NEW_IMG_ERROR "mlx_new_image() failed"
 # define MLX_IMG_FRAMES_ERROR "malloc() failed to alloc image frames"
 # define OPEN_FILE_FAILED ": open() failed"
+# define ERROR_LOAD_SKYBOX "failed to load skybox file"
+# define ERROR_LOAD_BLOCK "failed to load block texture file"
 
 #endif
