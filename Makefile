@@ -5,21 +5,23 @@ SRC= srcs/main.c \
 	srcs/ft_handler_keys.c \
 	srcs/ft_handler_buttons.c \
 	srcs/ft_handler_mouse_motion.c \
-	srcs/ft_draw_polygone.c \
 	srcs/ft_plot_pixel.c \
-	srcs/ft_multiply_vertex_matrix.c \
-	srcs/ft_multiply_scalar_vertex.c \
-	srcs/ft_translation.c \
-	srcs/ft_scaling.c \
-	srcs/ft_perspective_transformation.c \
-	srcs/ft_draw_obj.c \
-	srcs/ft_obj_translation.c \
-	srcs/ft_obj_scaling.c \
-	srcs/ft_obj_perspective_transformation.c \
+	srcs/ft_get_world_map.c \
+	srcs/ft_raycasting.c \
 	srcs/ft_handler_a.c \
-	srcs/ft_handler_s.c \
 	srcs/ft_handler_d.c \
+	srcs/ft_handler_s.c \
 	srcs/ft_handler_w.c
+#	srcs/ft_draw_polygone.c \
+#	srcs/ft_multiply_vertex_matrix.c \
+#	srcs/ft_multiply_scalar_vertex.c \
+#	srcs/ft_translation.c \
+#	srcs/ft_scaling.c \
+#	srcs/ft_perspective_transformation.c \
+#	srcs/ft_draw_obj.c \
+#	srcs/ft_obj_translation.c \
+#	srcs/ft_obj_scaling.c \
+#	srcs/ft_obj_perspective_transformation.c \
 # 	srcs/ft_handler_right.c \
 # 	srcs/ft_handler_left.c \
 # 	srcs/ft_handler_up.c \

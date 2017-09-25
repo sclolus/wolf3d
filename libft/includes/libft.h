@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 11:35:25 by sclolus           #+#    #+#             */
-/*   Updated: 2017/09/10 22:18:19 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/09/24 21:06:48 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define STATIC_BUF_SIZE 3
 # define STATIC_PUT_FLUSH 1
 
-# define ERROR_NAME_HEADER "libft_default_error: "
+# define ERROR_NAME_HEADER "Wolf3d: "
 
 # define MALLOC_FAILURE "malloc() failed due to insufficient ressources left"
 

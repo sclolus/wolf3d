@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/10 21:54:49 by sclolus           #+#    #+#             */
-/*   Updated: 2017/09/12 12:16:12 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/09/25 02:32:05 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@ typedef void* t_mlx_win;
 typedef void* t_mlx_img;
 typedef void* t_mlx_ptr;
 
-# define WINDOW_NAME "fdf"
+# define WINDOW_NAME "wolf3d"
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
+# define BASE_DISTANCE 0.001f
 
-# define MOVE_COEFF 10.0f
+# define MOVE_COEFF 0.1f
+# define ROTATION_COEFF (float)M_PI / WINDOW_WIDTH * 100
 
 typedef struct	s_vec
 {
@@ -38,11 +40,6 @@ typedef struct	s_vec
 	float	z;
 	float	w;
 }				t_vec;
-
-typedef struct	s_transformation_matrix
-{
-	float	coeffs[4][4];
-}				t_matrix4;
 
 typedef struct	s_keycode_f
 {
@@ -77,40 +74,41 @@ typedef struct	s_mlx_data
 	t_image_frame		*frame;
 }				t_mlx_data;
 
-typedef struct	s_quat
+typedef enum		e_block_type
+{
+	AIR = 0,
+	NORMAL,
+	SUPPORTED_BLOCK_TYPES,
+}				t_block_type;
+
+typedef struct	s_pos
 {
 	float	x;
 	float	y;
-	float	z;
-	float	w;
-}				t_quat;
+}				t_pos;
 
-typedef struct	s_float2
+typedef struct	s_block
 {
-	float	x;
-	float	y;
-}				t_float2;
+/* 	t_pos			pos; */
+/* 	float			height; */
+/* 	float			width; */
+/* 	float			depth; */
+	t_block_type	type;
+/* 	void			*texture; */
+}				t_block;
 
-typedef struct	s_polygone
+typedef struct	s_map
 {
-	t_vec		*vertices;
-	t_vec		*result_vertices;
-	t_vec		*texture_vertices;
-	uint64_t	nbr_vec;
-	int			color;
-	char		pad[4];
-}				t_polygone;
+	uint64_t		width;
+	uint64_t		height;
+	t_block			*buffer;
+}				t_map;
 
-typedef struct	s_obj
+typedef struct	s_player
 {
-	t_vec		*vertices;
-	t_vec		*result_vertices;
-	t_polygone	*polygones;
-	void		*texture_buffer;
-	uint64_t	nbr_poly; //
-	uint64_t	nbr_vs; //
-	uint64_t	flags;
-}				t_obj;
+	t_pos	pos;
+	float	angle;
+}				t_player;
 
 /*
 ** Image handling
@@ -121,40 +119,17 @@ typedef struct	s_obj
 t_image_frame	*ft_get_image_frames(t_mlx_ptr connector, uint32_t nbr_frames);
 
 /*
-** Rasterizing
+** World
+*/
+
+t_map		*ft_get_world_map(void);
+
+/*
+** Rendering
 */
 
 void		ft_plot_pixel(const uint32_t x, const uint32_t y, int *image, const int color);
-void		ft_draw_obj(t_obj *obj, t_mlx_data *mlx_data);
-void		ft_draw_polygone(t_polygone *polygone, t_mlx_data *mlx_data);
-float		ft_cross_product(const t_float2 a, const t_float2 b);
-void		ft_get_min_max_coords(t_polygone *polygone, uint32_t *max_coords
-								, uint32_t *min_coords);
-float		ft_min_float(const float a, const float b);
-float		ft_max_float(const float a, const float b);
-
-/*
-** Rasterizing
-*/
-
-# define N_DISTANCE -1.0f
-# define F_DISTANCE 1.0f
-
-t_vec		ft_translation(t_vec vertex, const t_vec translation);
-t_vec		ft_scaling(t_vec vertex, const t_vec scaling);
-t_vec		ft_perspective_transformation(t_vec vertex);
-
-void		ft_obj_translation(t_obj *obj, t_vec translation);
-void		ft_obj_scaling(t_obj *obj, t_vec scaling);
-void		ft_obj_perspective_transformation(t_obj *obj);
-
-/*
-** Matrices
-*/
-
-t_vec		ft_multiply_vertex_matrix(t_vec vertex, t_matrix4 matrix);
-t_vec		ft_multiply_scalar_vertex(t_vec vertex, float scalar);
-
+void		ft_raycasting(t_mlx_data *data, t_player *player);
 
 /*
 ** Key handling
