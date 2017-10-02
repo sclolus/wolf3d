@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/24 21:10:09 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/02 07:54:30 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/02 07:55:04 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static inline void			ft_draw_line(const uint32_t x, const float distance
 		height = (uint32_t)(((float)(WINDOW_HEIGHT) / distance));
 	if (height > WINDOW_HEIGHT)
 		height = WINDOW_HEIGHT;
-	height /= 2;
 	i = (WINDOW_HEIGHT / 2) - (height / 2);
 	max_y = (WINDOW_HEIGHT / 2) + (height / 2);
 	while (i < max_y)
