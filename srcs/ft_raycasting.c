@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/24 21:10:09 by sclolus           #+#    #+#             */
-/*   Updated: 2017/09/25 10:34:00 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/02 07:52:26 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,21 @@ static inline t_block_type	ft_get_current_block_type(t_map *map, t_pos pos)
 	return (SUPPORTED_BLOCK_TYPES);
 }
 
+static inline int			ft_shade_distance(int color, float distance)
+{
+	t_color		darker_color;
+	float		shading;
+
+	shading = (1.0f / (distance * distance));
+	if (shading > 1)
+		shading = 1;
+	darker_color.color = color;
+	darker_color.component.r = (uint8_t)((float)darker_color.component.r * shading);
+	darker_color.component.g = (uint8_t)((float)darker_color.component.g * shading);
+	darker_color.component.b = (uint8_t)((float)darker_color.component.b * shading);
+	return (darker_color.color);
+}
+
 static inline void			ft_draw_line(const uint32_t x, const float distance
 										 , t_mlx_data *mlx_data, int color)
 {
@@ -39,7 +54,7 @@ static inline void			ft_draw_line(const uint32_t x, const float distance
 	if (distance >= -0.0001f && distance <= 0.0001f)
 		height = WINDOW_HEIGHT;
 	else
-		height = (uint32_t)(((float)WINDOW_HEIGHT / distance));
+		height = (uint32_t)(((float)(WINDOW_HEIGHT) / distance));
 	if (height > WINDOW_HEIGHT)
 		height = WINDOW_HEIGHT;
 	i = (WINDOW_HEIGHT / 2) - (height / 2);
@@ -50,8 +65,10 @@ static inline void			ft_draw_line(const uint32_t x, const float distance
 		++i;
 	}
 	while (i < WINDOW_HEIGHT)
-		ft_plot_pixel(x, i++, mlx_data->frame->buffer, 0x00FFFF);
+		ft_plot_pixel(x, i++, mlx_data->frame->buffer, ft_shade_distance(color, distance));
 }
+
+#include <stdio.h>
 
 static inline void			raycast(t_map *map, uint32_t x, float original_angle, float angle, t_pos pos, t_mlx_data *mlx_data)
 {
@@ -72,7 +89,6 @@ static inline void			raycast(t_map *map, uint32_t x, float original_angle, float
 		pos.x += delta_pos.x;
 		if ((type = ft_get_current_block_type(map, pos)) || type == SUPPORTED_BLOCK_TYPES)
 		{
-			pos.y += delta_pos.y;
 			side = 1;
 			break ;
 		}
@@ -84,10 +100,17 @@ static inline void			raycast(t_map *map, uint32_t x, float original_angle, float
 		}
 	}
 	if (side)
+	{
+		pos.x = FLOORING_DU_TURFU(pos.x);
 		color = 0xFF0000 + (cpy_pos.x > pos.x) * 0x00FF00;
+	}
 	else
+	{
+		pos.y = FLOORING_DU_TURFU(pos.y);
 		color = 0x0000FF + (cpy_pos.y > pos.y) * 0x00FF00;
+	}
 	distance = sqrtf(powf(pos.x - cpy_pos.x, 2) + powf(pos.y - cpy_pos.y, 2));
+	color = ft_shade_distance(color, distance);
 	distance *= cosf(original_angle - angle);
 	ft_draw_line(x, distance, mlx_data, color);
 }
@@ -104,11 +127,12 @@ void				ft_raycasting(t_mlx_data *data, t_player *player)
 	angle = player->angle - (float)M_PI / 4;
 	delta_angle = (float)M_PI / 2 / WINDOW_WIDTH;
 	i = 0;
-//	printf("angle: %lf\n", (double)angle * 180 / M_PI);
 	while (i < WINDOW_WIDTH)
 	{
 		raycast(map, i, player->angle, angle, player->pos, data);
 		angle += delta_angle;
 		i++;
 	}
+	if (!map->buffer[(uint32_t)player->pos.x  + (uint32_t)player->pos.y * map->width].type)
+		ft_raindrops(data);
 }

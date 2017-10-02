@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/10 21:54:49 by sclolus           #+#    #+#             */
-/*   Updated: 2017/09/25 09:47:14 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/02 06:36:48 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,15 @@ typedef void* t_mlx_ptr;
 # define WINDOW_NAME "wolf3d"
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
-# define BASE_DISTANCE 0.002f
+# define BASE_DISTANCE 0.001f
 
 # define MOVE_COEFF 0.1f
 # define ROTATION_COEFF (float)M_PI / WINDOW_WIDTH * 90
 
 # define FOV 90.0f
-# define ABS(x) (x < 0 ? -x: x)
+# define ABS(x) (x < 0 ? -x : x)
+# define ROUND(x) (x >= 0.0f ? (int64_t)(x + 0.5f) : (int64_t)(x - 0.5f))
+# define FLOORING_DU_TURFU(_x) ((float)ROUND(_x))
 
 typedef struct	s_vec
 {
@@ -130,6 +132,20 @@ typedef struct	s_player
 	float	angle;
 }				t_player;
 
+typedef struct	s_rgb
+{
+	uint8_t	b;
+	uint8_t	g;
+	uint8_t	r;
+	uint8_t	a;
+}				t_rgb;
+
+typedef union	u_color
+{
+	t_rgb	component;
+	int		color;
+}				t_color;
+
 /*
 ** Image handling
 */
@@ -156,6 +172,8 @@ t_texture	*ft_get_textures(t_mlx_data *data);
 void		ft_plot_pixel(const uint32_t x, const uint32_t y, int *image, const int color);
 void		ft_raycasting(t_mlx_data *data, t_player *player);
 void		ft_apply_skybox(t_mlx_data *data, t_player *player, t_map *map);
+
+void		ft_raindrops(t_mlx_data *data);
 
 /*
 ** Key handling

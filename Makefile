@@ -13,7 +13,8 @@ SRC= srcs/main.c \
 	srcs/ft_handler_s.c \
 	srcs/ft_handler_w.c \
 	srcs/ft_apply_skybox.c \
-	srcs/ft_get_textures.c
+	srcs/ft_get_textures.c \
+	srcs/ft_raindrops.c
 #	srcs/ft_draw_polygone.c \
 #	srcs/ft_multiply_vertex_matrix.c \
 #	srcs/ft_multiply_scalar_vertex.c \
