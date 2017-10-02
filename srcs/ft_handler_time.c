@@ -1,19 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_handler_r.c                                     :+:      :+:    :+:   */
+/*   ft_handler_time.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/08/30 06:11:55 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/02 23:49:33 by sclolus          ###   ########.fr       */
+/*   Created: 2017/10/02 23:05:24 by sclolus           #+#    #+#             */
+/*   Updated: 2017/10/02 23:11:07 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-void	ft_handler_r(void *param)
+int	ft_handler_time(void *param)
 {
-	(void)param;
-	*ft_get_rain_bool() ^= 1;
+	t_mlx_data	*mlx_data;
+	t_player	*player;
+
+	mlx_data = ((t_mlx_data**)param)[0];
+	player = ((t_player**)param)[1];
+	ft_bzero(mlx_data->frame->buffer, 4 * WINDOW_WIDTH * WINDOW_HEIGHT);
+	ft_raycasting(mlx_data, player);
+	mlx_put_image_to_window(mlx_data->connector, mlx_data->win
+						, mlx_data->frame->frame, 0, 0);
+	return (1);
 }

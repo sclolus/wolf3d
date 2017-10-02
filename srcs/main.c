@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/10 22:14:10 by sclolus           #+#    #+#             */
-/*   Updated: 2017/09/27 15:24:10 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/02 23:19:03 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static inline void	ft_set_mlx_hooks(t_mlx_data *mlx_data, void **params)
 	(void)mlx_data;
 	(void)params;
 	mlx_hook(mlx_data->win, KEYRELEASE, KEYRELEASEMASK, &ft_handler_keys_release
+		, params);
+	mlx_loop_hook(mlx_data->connector, &ft_handler_time
 		, params);
 /* 	mlx_hook(mlx_data->win, BUTTONPRESS, BUTTONPRESSMASK, &ft_handler_buttons */
 /* 		, params); */

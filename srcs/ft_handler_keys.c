@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 21:05:42 by sclolus           #+#    #+#             */
-/*   Updated: 2017/09/25 00:52:52 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/02 23:49:03 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,9 @@ static t_keycode_f	*ft_get_keycodes_f(void)
 		{ft_handler_s, KEY_S, 0},
 		{ft_handler_d, KEY_D, 0},
 		{ft_handler_w, KEY_W, 0},
-/* 		{ft_handler_pad_up, KEY_PAD_ADD, 0}, */
-/* 		{ft_handler_pad_down, KEY_PAD_SUB, 0} */};
+		{ft_handler_r, KEY_R, 0},
+		{ft_handler_pad_plus, KEY_PAD_ADD, 0},
+		{ft_handler_pad_minus, KEY_PAD_SUB, 0}};
 
 	if (sizeof(keycodes_f) / sizeof(t_keycode_f) != NBR_KEY_HOOKS)
 		ft_error_exit(1, (char*[]){INVALID_KEYS_HOOKS_NBR}, EXIT_FAILURE);

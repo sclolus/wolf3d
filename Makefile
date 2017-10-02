@@ -12,9 +12,15 @@ SRC= srcs/main.c \
 	srcs/ft_handler_d.c \
 	srcs/ft_handler_s.c \
 	srcs/ft_handler_w.c \
+	srcs/ft_handler_time.c \
 	srcs/ft_apply_skybox.c \
 	srcs/ft_get_textures.c \
-	srcs/ft_raindrops.c
+	srcs/rain/ft_raindrops.c \
+	srcs/rain/ft_get_rain_factor.c \
+	srcs/rain/ft_get_rain_bool.c \
+	srcs/ft_handler_pad_minus.c \
+	srcs/ft_handler_pad_plus.c \
+	srcs/ft_handler_r.c
 #	srcs/ft_draw_polygone.c \
 #	srcs/ft_multiply_vertex_matrix.c \
 #	srcs/ft_multiply_scalar_vertex.c \
@@ -47,7 +53,7 @@ HDRS= includes/wolf3d.h
 OBJ= $(SRC:.c=.o)
 HDR_PATH= ./libft/includes/
 CC= gcc
-CC_FLAGS= -v -Ofast -Weverything -Wall -Werror -Wextra # -g3 -fsanitize=address -fsanitize-blacklist=my_ignores.txt
+CC_FLAGS= -v -Ofast -Weverything -Wall -Werror -Wextra  #-g3 -fsanitize=address -fsanitize-blacklist=my_ignores.txt
 MLX_PATH=./minilibx_macos/
 LIBFT_PATH=./libft/
 FLAGS= -L$(MLX_PATH) -lmlx -L$(LIBFT_PATH) -lft -I$(HDR_PATH) -I./includes -I$(MLX_PATH) -framework OpenGL -framework AppKit

@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_handler_r.c                                     :+:      :+:    :+:   */
+/*   ft_get_rain_bool.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/08/30 06:11:55 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/02 23:49:33 by sclolus          ###   ########.fr       */
+/*   Created: 2017/10/02 23:45:53 by sclolus           #+#    #+#             */
+/*   Updated: 2017/10/02 23:51:51 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-void	ft_handler_r(void *param)
+bool	*ft_get_rain_bool(void)
 {
-	(void)param;
-	*ft_get_rain_bool() ^= 1;
+	static bool	rain_bool = 1;
+
+	return (&rain_bool);
 }

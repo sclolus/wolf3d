@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/10 21:54:49 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/02 06:36:48 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/02 23:48:41 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,13 +173,30 @@ void		ft_plot_pixel(const uint32_t x, const uint32_t y, int *image, const int co
 void		ft_raycasting(t_mlx_data *data, t_player *player);
 void		ft_apply_skybox(t_mlx_data *data, t_player *player, t_map *map);
 
+/*
+** Rain
+*/
+
+# define BASE_RAIN_LIMIT 100
+# define BASE_RAIN_UPPER_LIMIT 12000
+# define BASE_RAIN_FACTOR 5000
+# define BASE_RAIN_MODIFIER_FACTOR 100
+
 void		ft_raindrops(t_mlx_data *data);
+
+uint64_t	*ft_get_rain_factor(void);
+bool		*ft_get_rain_bool(void);
+void		ft_handler_r(void *param);
+void		ft_handler_pad_minus(void *param);
+void		ft_handler_pad_plus(void *param);
+
+int			ft_handler_time(void *param);
 
 /*
 ** Key handling
 */
 
-# define NBR_KEY_HOOKS 5
+# define NBR_KEY_HOOKS 8
 # define FUCK_NORME " number provided in macro expansion"
 # define INVALID_KEYS_HOOKS_NBR "Invalid keys_hooks" FUCK_NORME
 

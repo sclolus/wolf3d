@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/24 21:10:09 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/02 07:55:04 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/02 08:13:45 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ static inline void			raycast(t_map *map, uint32_t x, float original_angle, float
 		pos.y = FLOORING_DU_TURFU(pos.y);
 		color = 0x0000FF + (cpy_pos.y > pos.y) * 0x00FF00;
 	}
-	distance = sqrtf(powf(pos.x - cpy_pos.x, 2) + powf(pos.y - cpy_pos.y, 2));
+	distance = sqrtf(powf(cpy_pos.x - pos.x, 2) + powf(cpy_pos.y - pos.y, 2));
 	color = ft_shade_distance(color, distance);
 	distance *= cosf(original_angle - angle);
 	ft_draw_line(x, distance, mlx_data, color);
