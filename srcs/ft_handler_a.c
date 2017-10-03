@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 07:50:31 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/03 12:05:29 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/03 15:11:23 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,4 @@ void	ft_handler_a(void *param)
 	player->angle -= ROTATION_COEFF;
 	if (player->angle < -((float)M_PI))
 		player->angle += 2 * ((float)M_PI);
-	ft_bzero(mlx_data->frame->buffer, 4 * WINDOW_WIDTH * WINDOW_HEIGHT);
-	ft_rendering(mlx_data, player);
-	mlx_put_image_to_window(mlx_data->connector, mlx_data->win
-							, mlx_data->frame->frame, 0, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/10 21:54:49 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/03 14:34:49 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/03 16:12:59 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <math.h>
 # include <stdbool.h>
 # include <unistd.h>
+# include <time.h>
 
 typedef void* t_mlx_win;
 typedef void* t_mlx_img;
@@ -28,10 +29,11 @@ typedef void* t_mlx_ptr;
 # define WINDOW_NAME "wolf3d"
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
-# define BASE_DISTANCE 0.001f
+# define BASE_DISTANCE 0.005f
 
-# define MOVE_COEFF 0.1f
-# define ROTATION_COEFF (float)M_PI / WINDOW_WIDTH * 90 / 2
+# define REFRESH_ON_ACTION 0
+# define MOVE_COEFF 0.06f
+# define ROTATION_COEFF (float)M_PI / WINDOW_WIDTH * 90 / 4
 
 # define FOV 90.0f
 # define ABS(x) (x < 0 ? -x : x)
@@ -209,7 +211,7 @@ int				ft_handler_time(void *param);
 ** Key handling
 */
 
-# define NBR_KEY_HOOKS 9
+# define NBR_KEY_HOOKS 10
 # define FUCK_NORME " number provided in macro expansion"
 # define INVALID_KEYS_HOOKS_NBR "Invalid keys_hooks" FUCK_NORME
 
@@ -224,6 +226,20 @@ void			ft_handler_a(void *param);
 void			ft_handler_s(void *param);
 void			ft_handler_d(void *param);
 void			ft_handler_q(void *param);
+void			ft_handler_f(void *param);
+
+t_pos			ft_get_valid_move_vector(t_map *map
+								, t_player *player
+								, t_pos move);
+
+/*
+** FPS
+*/
+
+# define FPS_LIMIT 120
+
+bool			*ft_get_fps_bool(void);
+void			ft_put_fps(t_mlx_data *data, uint32_t fps);
 
 /*
 ** Button handling

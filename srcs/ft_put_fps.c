@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_handler_d.c                                     :+:      :+:    :+:   */
+/*   ft_put_fps.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/12 07:55:16 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/03 15:11:17 by sclolus          ###   ########.fr       */
+/*   Created: 2017/10/03 15:56:42 by sclolus           #+#    #+#             */
+/*   Updated: 2017/10/03 16:10:11 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-void	ft_handler_d(void *param)
+inline void	ft_put_fps(t_mlx_data *data, uint32_t fps)
 {
-	t_mlx_data	*mlx_data;
-	t_player	*player;
+	static char	fps_str[] = "FPS: 9999999999999999";
 
-	mlx_data = ((t_mlx_data**)param)[0];
-	player = ((t_player**)param)[1];
-	player->angle += ROTATION_COEFF;
-	if (player->angle >= (float)M_PI)
-		player->angle -= (float)M_PI * 2;
+	ft_strcpy(fps_str + 5, ft_static_ulltoa(fps));
+	mlx_string_put(data->connector, data->win, 10, 10, 0xFFFFFF, fps_str);
 }

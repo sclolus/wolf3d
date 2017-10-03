@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 11:35:25 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/03 14:36:43 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/03 16:06:20 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,17 @@
 # include <string.h>
 # include <stdint.h>
 # include <stdlib.h>
+# include <unistd.h>
 
 # define PHASZERO(x) ((((x + (0x7f7f7f7f7f7f7f7f)) ^ ~x) & 0x818080808080808080)
 # define PHASN(x, n) (Phaszero(x ^ ((~0UL / 255L) * n)))
-# define STATIC_BUF_SIZE 3
+# define STATIC_BUF_SIZE 4096
+# define BUFF_SIZE 4096
 # define STATIC_PUT_FLUSH 1
 
-# define ERROR_NAME_HEADER "Wolf3d: "
+# define NORETURN __attribute__((noreturn)) void
 
-# define MALLOC_FAILURE "malloc() failed due to insufficient ressources left"
+# define ERROR_NAME_HEADER "wolf3d: "
 
 typedef struct	s_list
 {
@@ -68,7 +70,7 @@ void			*ft_memchr(const void *s, int c, size_t n);
 int				ft_memcmp(const void *s1, const void *s2, size_t n);
 size_t			ft_strlen(const char *s);
 char			*ft_strdup(const char *s1);
-char			*ft_strndup(char *str, uint32_t len);
+char			*ft_strndup(char *str, size_t len);
 char			*ft_strcpy(char *dst, const char *src);
 char			*ft_strncpy(char *dst, const char *src, size_t len);
 char			*ft_strcat(char *s1, const char *s2);
@@ -101,6 +103,10 @@ void			ft_strclr(char *s);
 void			ft_striter(char *s, void (*f)(char *));
 void			ft_striteri(char *s, void (*f)(unsigned int, char *));
 char			*ft_itoa(int n);
+char			*ft_ulltoa(uint64_t nbr);
+char			*ft_static_lltoa(int64_t nbr);
+char			*ft_static_ulltoa(uint64_t nbr);
+char			*ft_static_ulltoa_base(uint64_t nbr, char *base);
 char			*ft_strmap(char const *s, char (*f)(char));
 char			*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 int				ft_strequ(char const *s1, char const *s2);
@@ -166,8 +172,9 @@ char			*ft_get_file_content(char *filename);
 
 # define ERR_GET_FILE_CONTENT_MALLOC "malloc() failed in get_file_content()"
 # define ERR_FILE_OPEN "Failed to open file: "
+# define MALLOC_FAILURE "malloc() failed due to insufficient ressources"
 
 int32_t			ft_error(uint32_t n, char **str, int32_t return_status);
-void			ft_error_exit(uint32_t n, char **str, int32_t exit_status);
+NORETURN		ft_error_exit(uint32_t n, char **str, int32_t exit_status);
 
 #endif

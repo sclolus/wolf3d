@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/11 05:02:58 by sclolus           #+#    #+#             */
-/*   Updated: 2017/08/30 01:40:57 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/09/18 18:45:10 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,11 @@
 
 static void		ft_get_file_content_string(t_string *string, int fd)
 {
-	char		*line;
+	static char	buffer[BUFF_SIZE];
+	ssize_t		n;
 
-	line = NULL;
-	while ((get_next_line(fd, &line)) > 0)
-	{
-		ft_t_string_concat(string, line);
-		ft_t_string_concat(string, "\n");
-		free(line);
-	}
+	while ((n = read(fd, buffer, BUFF_SIZE)))
+		ft_t_string_concat_len(string, buffer, n);
 }
 
 char			*ft_get_file_content(char *filename)
@@ -42,6 +38,7 @@ char			*ft_get_file_content(char *filename)
 		free(string.string);
 		return (NULL);
 	}
+	string.string[0] = '\0';
 	ft_get_file_content_string(&string, fd);
 	return (string.string);
 }

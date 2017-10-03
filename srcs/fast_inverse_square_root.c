@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/03 12:25:17 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/03 14:26:50 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/03 15:40:12 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ inline float	fast_inverse_square_root(const float nbr)
 	i = *(long *)(void*)&y;
 	i = 0x5f3759df - (i >> 1);
 	y = *(float *)&i;
+	y = y * (threehalfs - (x2 * y * y));
 	y = y * (threehalfs - (x2 * y * y));
 	return (y);
 }
