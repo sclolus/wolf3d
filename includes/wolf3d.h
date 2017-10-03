@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/10 21:54:49 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/02 23:48:41 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/03 08:41:13 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,11 @@ typedef void* t_mlx_ptr;
 # define BASE_DISTANCE 0.001f
 
 # define MOVE_COEFF 0.1f
-# define ROTATION_COEFF (float)M_PI / WINDOW_WIDTH * 90
+# define ROTATION_COEFF (float)M_PI / WINDOW_WIDTH * 90 / 2
 
 # define FOV 90.0f
 # define ABS(x) (x < 0 ? -x : x)
+# define SMALLER(x, y) (x > y ? y : x)
 # define ROUND(x) (x >= 0.0f ? (int64_t)(x + 0.5f) : (int64_t)(x - 0.5f))
 # define FLOORING_DU_TURFU(_x) ((float)ROUND(_x))
 
@@ -132,6 +133,11 @@ typedef struct	s_player
 	float	angle;
 }				t_player;
 
+
+/*
+** Color handling
+*/
+
 typedef struct	s_rgb
 {
 	uint8_t	b;
@@ -145,6 +151,10 @@ typedef union	u_color
 	t_rgb	component;
 	int		color;
 }				t_color;
+
+int			ft_shade_color(int color, float shading);
+void		ft_shade_image(int *image, uint32_t width
+						, uint32_t height, float shading);
 
 /*
 ** Image handling
@@ -181,6 +191,7 @@ void		ft_apply_skybox(t_mlx_data *data, t_player *player, t_map *map);
 # define BASE_RAIN_UPPER_LIMIT 12000
 # define BASE_RAIN_FACTOR 5000
 # define BASE_RAIN_MODIFIER_FACTOR 100
+# define SKYBOX_SHADING_FACTOR (0.999f)
 
 void		ft_raindrops(t_mlx_data *data);
 
@@ -196,7 +207,7 @@ int			ft_handler_time(void *param);
 ** Key handling
 */
 
-# define NBR_KEY_HOOKS 8
+# define NBR_KEY_HOOKS 9
 # define FUCK_NORME " number provided in macro expansion"
 # define INVALID_KEYS_HOOKS_NBR "Invalid keys_hooks" FUCK_NORME
 
@@ -210,31 +221,7 @@ void						ft_handler_w(void *param);
 void						ft_handler_a(void *param);
 void						ft_handler_s(void *param);
 void						ft_handler_d(void *param);
-/* void						ft_handler_right(void *param); */
-/* void						ft_handler_left(void *param); */
-/* void						ft_handler_down(void *param); */
-/* void						ft_handler_up(void *param); */
-/* void						ft_handler_page_up(void *param); */
-/* void						ft_handler_page_down(void *param); */
-/* void						ft_handler_pad_down(void *param); */
-/* void						ft_handler_pad_up(void *param); */
-/* void						ft_handler_r(void *param); */
-/* void						ft_handler_m(void *param); */
-/* void						ft_handler_q(void *param); */
-/* void						ft_handler_e(void *param); */
-/* void						ft_handler_w(void *param); */
-/* void						ft_handler_s(void *param); */
-/* void						ft_handler_d(void *param); */
-/* void						ft_handler_a(void *param); */
-/* void						ft_handler_t(void *param); */
-/* void						ft_handler_p(void *param); */
-/* void						ft_handler_2(void *param); */
-/* void						ft_handler_1(void *param); */
-/* void						ft_handler_5(void *param); */
-/* void						ft_handler_6(void *param); */
-/* void						ft_handler_7(void *param); */
-/* void						ft_handler_4(void *param); */
-/* void						ft_handler_3(void *param); */
+void						ft_handler_q(void *param);
 
 /*
 ** Button handling

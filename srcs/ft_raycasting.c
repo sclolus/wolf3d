@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/24 21:10:09 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/02 08:13:45 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/03 08:53:33 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ void				ft_raycasting(t_mlx_data *data, t_player *player)
 
 	map = ft_get_world_map(data);
 	ft_apply_skybox(data, player, map);
-	angle = player->angle - (float)M_PI / 4;
-	delta_angle = (float)M_PI / 2 / WINDOW_WIDTH;
+	angle = player->angle - (float)M_PI / 6;
+	delta_angle = (float)M_PI / 3 / WINDOW_WIDTH;
 	i = 0;
 	while (i < WINDOW_WIDTH)
 	{

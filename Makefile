@@ -9,6 +9,7 @@ SRC= srcs/main.c \
 	srcs/ft_get_world_map.c \
 	srcs/ft_raycasting.c \
 	srcs/ft_handler_a.c \
+	srcs/ft_handler_q.c \
 	srcs/ft_handler_d.c \
 	srcs/ft_handler_s.c \
 	srcs/ft_handler_w.c \
@@ -20,7 +21,9 @@ SRC= srcs/main.c \
 	srcs/rain/ft_get_rain_bool.c \
 	srcs/ft_handler_pad_minus.c \
 	srcs/ft_handler_pad_plus.c \
-	srcs/ft_handler_r.c
+	srcs/ft_handler_r.c \
+	srcs/ft_shade_color.c \
+	srcs/ft_shade_image.c
 #	srcs/ft_draw_polygone.c \
 #	srcs/ft_multiply_vertex_matrix.c \
 #	srcs/ft_multiply_scalar_vertex.c \
