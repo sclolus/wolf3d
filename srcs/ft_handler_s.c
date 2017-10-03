@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 07:53:30 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/03 09:04:09 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/03 10:48:10 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	ft_handler_s(void *param)
 	mlx_data = ((t_mlx_data**)param)[0];
 	player = ((t_player**)param)[1];
 	new_pos = (t_pos){player->pos.x - cosf(player->angle) * MOVE_COEFF,
-					  player->pos.y - sinf(player->angle) * MOVE_COEFF};
+					player->pos.y - sinf(player->angle) * MOVE_COEFF};
 	map = ft_get_world_map(mlx_data);
 	if (new_pos.x < 0 || new_pos.y < 0 || new_pos.x > map->width
-		|| new_pos.y > map->height
-		|| map->buffer[(uint32_t)new_pos.x + (uint32_t)new_pos.y * map->width].blocking)
+		|| new_pos.y > map->height || map->buffer[(uint32_t)new_pos.x
+		+ (uint32_t)new_pos.y * map->width].blocking)
 		return ;
 	else
 		player->pos = new_pos;

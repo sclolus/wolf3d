@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 21:05:42 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/03 00:20:29 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/03 10:40:52 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,6 @@ static t_keycode_f	*ft_get_keycodes_f(void)
 {
 	static t_keycode_f	keycodes_f[] = {
 		{ft_handler_esc, KEY_ESCAPE, 0},
-/* 		{ft_handler_right, KEY_RIGHT, 0}, */
-/* 		{ft_handler_left, KEY_LEFT, 0}, */
-/* 		{ft_handler_up, KEY_UP, 0}, */
-/* 		{ft_handler_down, KEY_DOWN, 0}, */
-/* 		{ft_handler_page_up, KEY_PAGE_UP, 0}, */
-/* 		{ft_handler_page_down, KEY_PAGE_DOWN, 0}, */
-/* 		{ft_handler_p, KEY_P, 0}, {ft_handler_r, KEY_R, 0} */
-/* 		, {ft_handler_m, KEY_M, 0}, {ft_handler_t, KEY_T, 0} */
-/* 		, {ft_handler_1, KEY_1, 0}, {ft_handler_2, KEY_2, 0}, */
-/* 		{ft_handler_4, KEY_4, 0}, */
-/* 		{ft_handler_5, KEY_5, 0}, */
-/* 		{ft_handler_3, KEY_3, 0}, */
-/* 		{ft_handler_6, KEY_6, 0}, */
-/* 		{ft_handler_7, KEY_7, 0}, */
 		{ft_handler_q, KEY_Q, 0},
 		{ft_handler_a, KEY_A, 0},
 		{ft_handler_s, KEY_S, 0},

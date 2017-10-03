@@ -3,8 +3,6 @@ SRC= srcs/main.c \
 	srcs/ft_get_image_frames.c \
 	srcs/ft_handler_esc.c \
 	srcs/ft_handler_keys.c \
-	srcs/ft_handler_buttons.c \
-	srcs/ft_handler_mouse_motion.c \
 	srcs/ft_plot_pixel.c \
 	srcs/ft_get_world_map.c \
 	srcs/ft_raycasting.c \

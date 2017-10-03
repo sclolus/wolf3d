@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/24 21:10:09 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/03 08:53:33 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/03 10:55:58 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,22 @@ static inline int			ft_shade_distance(int color, float distance)
 	if (shading > 1)
 		shading = 1;
 	darker_color.color = color;
-	darker_color.component.r = (uint8_t)((float)darker_color.component.r * shading);
-	darker_color.component.g = (uint8_t)((float)darker_color.component.g * shading);
-	darker_color.component.b = (uint8_t)((float)darker_color.component.b * shading);
+	darker_color.component.r = (uint8_t)((float)darker_color.component.r
+										* shading);
+	darker_color.component.g = (uint8_t)((float)darker_color.component.g
+										* shading);
+	darker_color.component.b = (uint8_t)((float)darker_color.component.b
+										* shading);
 	return (darker_color.color);
 }
 
 static inline void			ft_draw_line(const uint32_t x, const float distance
-										 , t_mlx_data *mlx_data, int color)
+										, t_mlx_data *mlx_data, int color)
 {
 	uint32_t	i;
 	uint32_t	max_y;
 	uint32_t	height;
-/* 	t_texture	*texture; */
-/* 	int32_t		texture_x; */
 
-/* 	texture = ft_get_textures(mlx_data); */
-/* 	texture_x = (int)(texture->width * texture_x_f); */
 	if (distance >= -0.0001f && distance <= 0.0001f)
 		height = WINDOW_HEIGHT;
 	else
@@ -65,12 +64,12 @@ static inline void			ft_draw_line(const uint32_t x, const float distance
 		++i;
 	}
 	while (i < WINDOW_HEIGHT)
-		ft_plot_pixel(x, i++, mlx_data->frame->buffer, ft_shade_distance(color, distance));
+		ft_plot_pixel(x, i++, mlx_data->frame->buffer
+					, ft_shade_distance(color, distance));
 }
 
-#include <stdio.h>
-
-static inline void			raycast(t_map *map, uint32_t x, float original_angle, float angle, t_pos pos, t_mlx_data *mlx_data)
+static inline void			raycast(t_map *map, uint32_t x, float original_angle
+							, float angle, t_pos pos, t_mlx_data *mlx_data)
 {
 	t_pos				cpy_pos;
 	t_pos				delta_pos;
@@ -133,6 +132,7 @@ void				ft_raycasting(t_mlx_data *data, t_player *player)
 		angle += delta_angle;
 		i++;
 	}
-	if (!map->buffer[(uint32_t)player->pos.x  + (uint32_t)player->pos.y * map->width].type)
+	if (!map->buffer[(uint32_t)player->pos.x + (uint32_t)player->pos.y
+				* map->width].type)
 		ft_raindrops(data);
 }

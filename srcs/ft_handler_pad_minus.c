@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/02 23:20:21 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/03 08:40:13 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/03 10:44:43 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ void	ft_handler_pad_minus(void *param)
 		return ;
 	}
 	(*ft_get_rain_factor()) += BASE_RAIN_MODIFIER_FACTOR;
-	delta_shading = (float)(BASE_RAIN_UPPER_LIMIT - BASE_RAIN_LIMIT) / BASE_RAIN_MODIFIER_FACTOR;
+	delta_shading = (float)(BASE_RAIN_UPPER_LIMIT - BASE_RAIN_LIMIT)
+		/ BASE_RAIN_MODIFIER_FACTOR;
 	if (*ft_get_rain_factor() < BASE_RAIN_FACTOR)
 		ft_shade_image(map->skybox.skybox, (uint32_t)map->skybox.width
 			, (uint32_t)map->skybox.height, 1 / SKYBOX_SHADING_FACTOR);

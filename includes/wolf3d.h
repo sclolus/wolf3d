@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/10 21:54:49 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/03 08:41:13 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/03 11:02:25 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,9 @@
 # include "events.h"
 # include "key_codes_macos.h"
 # include "mlx.h"
-# include <stdio.h> //
 # include <math.h>
 # include <stdbool.h>
-# include <unistd.h> //
+# include <unistd.h>
 
 typedef void* t_mlx_win;
 typedef void* t_mlx_img;
@@ -39,14 +38,6 @@ typedef void* t_mlx_ptr;
 # define SMALLER(x, y) (x > y ? y : x)
 # define ROUND(x) (x >= 0.0f ? (int64_t)(x + 0.5f) : (int64_t)(x - 0.5f))
 # define FLOORING_DU_TURFU(_x) ((float)ROUND(_x))
-
-typedef struct	s_vec
-{
-	float	x;
-	float	y;
-	float	z;
-	float	w;
-}				t_vec;
 
 typedef struct	s_keycode_f
 {
@@ -81,7 +72,7 @@ typedef struct	s_mlx_data
 	t_image_frame		*frame;
 }				t_mlx_data;
 
-typedef enum		e_block_type
+typedef enum	e_block_type
 {
 	AIR = 0,
 	NORMAL,
@@ -96,13 +87,8 @@ typedef struct	s_pos
 
 typedef struct	s_block
 {
-/* 	t_pos			pos; */
-/* 	float			height; */
-/* 	float			width; */
-/* 	float			depth; */
 	t_block_type	type;
-	int				blocking; // bool
-/* 	void			*texture; */
+	int				blocking;
 }				t_block;
 
 typedef struct	s_skybox
@@ -133,7 +119,6 @@ typedef struct	s_player
 	float	angle;
 }				t_player;
 
-
 /*
 ** Color handling
 */
@@ -152,8 +137,8 @@ typedef union	u_color
 	int		color;
 }				t_color;
 
-int			ft_shade_color(int color, float shading);
-void		ft_shade_image(int *image, uint32_t width
+int				ft_shade_color(int color, float shading);
+void			ft_shade_image(int *image, uint32_t width
 						, uint32_t height, float shading);
 
 /*
@@ -172,16 +157,17 @@ t_image_frame	*ft_get_image_frames(t_mlx_ptr connector, uint32_t nbr_frames);
 # define SKYBOX_FILENAME TEXTURE_DIR "skybox.xpm"
 # define BLOCK_FILENAME TEXTURE_DIR "block.xpm"
 
-t_map		*ft_get_world_map(t_mlx_data *data);
-t_texture	*ft_get_textures(t_mlx_data *data);
+t_map			*ft_get_world_map(t_mlx_data *data);
+t_texture		*ft_get_textures(t_mlx_data *data);
 
 /*
 ** Rendering
 */
 
-void		ft_plot_pixel(const uint32_t x, const uint32_t y, int *image, const int color);
-void		ft_raycasting(t_mlx_data *data, t_player *player);
-void		ft_apply_skybox(t_mlx_data *data, t_player *player, t_map *map);
+void			ft_plot_pixel(const uint32_t x, const uint32_t y
+						, int *image, const int color);
+void			ft_raycasting(t_mlx_data *data, t_player *player);
+void			ft_apply_skybox(t_mlx_data *data, t_player *player, t_map *map);
 
 /*
 ** Rain
@@ -193,15 +179,15 @@ void		ft_apply_skybox(t_mlx_data *data, t_player *player, t_map *map);
 # define BASE_RAIN_MODIFIER_FACTOR 100
 # define SKYBOX_SHADING_FACTOR (0.999f)
 
-void		ft_raindrops(t_mlx_data *data);
+void			ft_raindrops(t_mlx_data *data);
 
-uint64_t	*ft_get_rain_factor(void);
-bool		*ft_get_rain_bool(void);
-void		ft_handler_r(void *param);
-void		ft_handler_pad_minus(void *param);
-void		ft_handler_pad_plus(void *param);
+uint64_t		*ft_get_rain_factor(void);
+bool			*ft_get_rain_bool(void);
+void			ft_handler_r(void *param);
+void			ft_handler_pad_minus(void *param);
+void			ft_handler_pad_plus(void *param);
 
-int			ft_handler_time(void *param);
+int				ft_handler_time(void *param);
 
 /*
 ** Key handling
@@ -213,15 +199,15 @@ int			ft_handler_time(void *param);
 
 # define NORETURN __attribute__((noreturn)) void
 
-int							ft_handler_keys(int keycode, void *param);
-int							ft_handler_keys_release(int keycode
-										, void * __attribute__((unused))param);
-NORETURN					ft_handler_esc(void * __attribute__((unused))param);
-void						ft_handler_w(void *param);
-void						ft_handler_a(void *param);
-void						ft_handler_s(void *param);
-void						ft_handler_d(void *param);
-void						ft_handler_q(void *param);
+int				ft_handler_keys(int keycode, void *param);
+int				ft_handler_keys_release(int keycode
+					, void * __attribute__((unused))param);
+NORETURN		ft_handler_esc(void * __attribute__((unused))param);
+void			ft_handler_w(void *param);
+void			ft_handler_a(void *param);
+void			ft_handler_s(void *param);
+void			ft_handler_d(void *param);
+void			ft_handler_q(void *param);
 
 /*
 ** Button handling
@@ -230,13 +216,13 @@ void						ft_handler_q(void *param);
 # define NBR_BUTTON_HOOKS 0
 # define INVALID_BUTTONS_HOOKS_NBR "Invalid buttons_hooks" FUCK_NORME
 
-int							ft_handler_buttons(int keycode, int x, int y
+int				ft_handler_buttons(int keycode, int x, int y
 													, void *param);
 /*
 ** Mouse motion handling
 */
 
-int							ft_handler_mouse_motion(int x, int y, void *param);
+int				ft_handler_mouse_motion(int x, int y, void *param);
 
 /*
 ** Error handling

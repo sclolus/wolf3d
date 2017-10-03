@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/02 04:48:32 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/03 06:06:35 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/03 10:41:15 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ inline void	ft_raindrops(t_mlx_data *data)
 
 	if (!*ft_get_rain_bool())
 		return ;
-	raindrops_nbr = ft_random() % (WINDOW_WIDTH * WINDOW_HEIGHT / *ft_get_rain_factor());
+	raindrops_nbr = ft_random() % (WINDOW_WIDTH * WINDOW_HEIGHT
+								/ *ft_get_rain_factor());
 	while (raindrops_nbr--)
 	{
 		x = ft_random() % WINDOW_WIDTH;
