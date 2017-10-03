@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/10 21:54:49 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/03 11:02:25 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/03 14:34:49 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,8 @@ typedef union	u_color
 int				ft_shade_color(int color, float shading);
 void			ft_shade_image(int *image, uint32_t width
 						, uint32_t height, float shading);
+int				ft_shade_distance(const int color
+						, const float distance);
 
 /*
 ** Image handling
@@ -164,10 +166,24 @@ t_texture		*ft_get_textures(t_mlx_data *data);
 ** Rendering
 */
 
+/*
+** Totally inappropriat data structure name, I know
+*/
+
+typedef struct	s_ray
+{
+	float	distance;
+	int		color;
+}				t_ray;
+
 void			ft_plot_pixel(const uint32_t x, const uint32_t y
 						, int *image, const int color);
-void			ft_raycasting(t_mlx_data *data, t_player *player);
+void			ft_rendering(t_mlx_data *data, t_player *player);
 void			ft_apply_skybox(t_mlx_data *data, t_player *player, t_map *map);
+
+float			fast_inverse_square_root(const float nbr);
+t_block_type	ft_get_current_block_type(t_map *map
+										, const t_pos pos);
 
 /*
 ** Rain

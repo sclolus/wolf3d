@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/10 22:14:10 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/03 10:49:07 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/03 12:05:30 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int					main(void)
 		ft_error_exit(1, (char*[]){MLX_NEW_WIN_ERROR}, EXIT_FAILURE);
 	mlx_data.frame = ft_get_image_frames(mlx_data.connector, NBR_IMAGE_FRAME);
 	player = (t_player){{1.5, 1.5}, 0};
-	ft_raycasting(&mlx_data, &player);
+	ft_rendering(&mlx_data, &player);
 	mlx_put_image_to_window(mlx_data.connector, mlx_data.win
 							, mlx_data.frame->frame, 0, 0);
 	ft_set_mlx_hooks(&mlx_data, (void*[]){&mlx_data, &player});

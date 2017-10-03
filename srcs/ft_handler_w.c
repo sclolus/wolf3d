@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/12 07:54:01 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/03 10:48:26 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/03 12:05:30 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_handler_w(void *param)
 	else
 		player->pos = new_pos;
 	ft_bzero(mlx_data->frame->buffer, 4 * WINDOW_WIDTH * WINDOW_HEIGHT);
-	ft_raycasting(mlx_data, player);
+	ft_rendering(mlx_data, player);
 	mlx_put_image_to_window(mlx_data->connector, mlx_data->win
 							, mlx_data->frame->frame, 0, 0);
 }

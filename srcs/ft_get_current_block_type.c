@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_handler_time.c                                  :+:      :+:    :+:   */
+/*   ft_get_current_block_type.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/02 23:05:24 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/03 12:05:28 by sclolus          ###   ########.fr       */
+/*   Created: 2017/10/03 14:34:25 by sclolus           #+#    #+#             */
+/*   Updated: 2017/10/03 14:34:32 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-int	ft_handler_time(void *param)
+inline t_block_type	ft_get_current_block_type(t_map *map
+											, const t_pos pos)
 {
-	t_mlx_data	*mlx_data;
-	t_player	*player;
+	uint32_t	x;
+	uint32_t	y;
 
-	mlx_data = ((t_mlx_data**)param)[0];
-	player = ((t_player**)param)[1];
-	ft_bzero(mlx_data->frame->buffer, 4 * WINDOW_WIDTH * WINDOW_HEIGHT);
-	ft_rendering(mlx_data, player);
-	mlx_put_image_to_window(mlx_data->connector, mlx_data->win
-						, mlx_data->frame->frame, 0, 0);
-	return (1);
+	x = (uint32_t)pos.x;
+	y = (uint32_t)pos.y;
+	if (x < map->width
+		&& y < map->height)
+		return (map->buffer[x + map->width * y].type);
+	return (SUPPORTED_BLOCK_TYPES);
 }

@@ -21,7 +21,9 @@ SRC= srcs/main.c \
 	srcs/ft_handler_pad_plus.c \
 	srcs/ft_handler_r.c \
 	srcs/ft_shade_color.c \
-	srcs/ft_shade_image.c
+	srcs/ft_shade_image.c \
+	srcs/fast_inverse_square_root.c \
+	srcs/ft_get_current_block_type.c
 #	srcs/ft_draw_polygone.c \
 #	srcs/ft_multiply_vertex_matrix.c \
 #	srcs/ft_multiply_scalar_vertex.c \

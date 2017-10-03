@@ -6,7 +6,7 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/04 11:35:25 by sclolus           #+#    #+#             */
-/*   Updated: 2017/09/24 21:06:48 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/03 14:36:43 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # define ERROR_NAME_HEADER "Wolf3d: "
 
 # define MALLOC_FAILURE "malloc() failed due to insufficient ressources left"
-
 
 typedef struct	s_list
 {

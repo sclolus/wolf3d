@@ -6,45 +6,14 @@
 /*   By: sclolus <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/24 21:10:09 by sclolus           #+#    #+#             */
-/*   Updated: 2017/10/03 10:55:58 by sclolus          ###   ########.fr       */
+/*   Updated: 2017/10/03 14:35:32 by sclolus          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 
-static inline t_block_type	ft_get_current_block_type(t_map *map, t_pos pos)
-{
-	uint32_t	x;
-	uint32_t	y;
-
-	x = (uint32_t)pos.x;
-	y = (uint32_t)pos.y;
-	if (x < map->width
-		&& y < map->height)
-		return (map->buffer[x + map->width * y].type);
-	return (SUPPORTED_BLOCK_TYPES);
-}
-
-static inline int			ft_shade_distance(int color, float distance)
-{
-	t_color		darker_color;
-	float		shading;
-
-	shading = (1.0f / (distance * distance));
-	if (shading > 1)
-		shading = 1;
-	darker_color.color = color;
-	darker_color.component.r = (uint8_t)((float)darker_color.component.r
-										* shading);
-	darker_color.component.g = (uint8_t)((float)darker_color.component.g
-										* shading);
-	darker_color.component.b = (uint8_t)((float)darker_color.component.b
-										* shading);
-	return (darker_color.color);
-}
-
 static inline void			ft_draw_line(const uint32_t x, const float distance
-										, t_mlx_data *mlx_data, int color)
+										, t_mlx_data *mlx_data, const int color)
 {
 	uint32_t	i;
 	uint32_t	max_y;
@@ -68,54 +37,76 @@ static inline void			ft_draw_line(const uint32_t x, const float distance
 					, ft_shade_distance(color, distance));
 }
 
-static inline void			raycast(t_map *map, uint32_t x, float original_angle
-							, float angle, t_pos pos, t_mlx_data *mlx_data)
+static inline int			ft_get_wall_color(int side, t_pos *pos
+											, t_pos cpy_pos)
 {
-	t_pos				cpy_pos;
+	if (side)
+	{
+		pos->x = FLOORING_DU_TURFU(pos->x);
+		return (0xFF0000 + (cpy_pos.x > pos->x) * 0x00FF00);
+	}
+	else
+	{
+		pos->y = FLOORING_DU_TURFU(pos->y);
+		return (0x0000FF + (cpy_pos.y > pos->y) * 0x00FF00);
+	}
+}
+
+static inline t_pos			ft_raycast(t_map *map, float angle, t_pos pos
+											, int *side)
+{
+	t_block_type		type;
 	t_pos				delta_pos;
+
+	delta_pos.x = BASE_DISTANCE * cosf(angle);
+	delta_pos.y = BASE_DISTANCE * sinf(angle);
+	type = AIR;
+	while (!(type = ft_get_current_block_type(map, pos))
+				&& type != SUPPORTED_BLOCK_TYPES)
+	{
+		pos.x += delta_pos.x;
+		if ((type = ft_get_current_block_type(map, pos))
+				|| type == SUPPORTED_BLOCK_TYPES)
+		{
+			*side = 1;
+			break ;
+		}
+		pos.y += delta_pos.y;
+		if ((type = ft_get_current_block_type(map, pos))
+				|| type == SUPPORTED_BLOCK_TYPES)
+		{
+			*side = 0;
+			break ;
+		}
+	}
+	return (pos);
+}
+
+static inline t_ray			raycast(t_map *map, t_player *player
+							, float angle)
+{
+	t_pos				pos;
 	t_block_type		type;
 	float				distance;
 	int					side;
 	int					color;
 
-	cpy_pos = pos;
-	delta_pos.x = BASE_DISTANCE * cosf(angle);
-	delta_pos.y = BASE_DISTANCE * sinf(angle);
-	type = AIR;
 	side = 0;
-	while (!(type = ft_get_current_block_type(map, pos)) && type != SUPPORTED_BLOCK_TYPES)
-	{
-		pos.x += delta_pos.x;
-		if ((type = ft_get_current_block_type(map, pos)) || type == SUPPORTED_BLOCK_TYPES)
-		{
-			side = 1;
-			break ;
-		}
-		pos.y += delta_pos.y;
-		if ((type = ft_get_current_block_type(map, pos)) || type == SUPPORTED_BLOCK_TYPES)
-		{
-			side = 0;
-			break ;
-		}
-	}
-	if (side)
-	{
-		pos.x = FLOORING_DU_TURFU(pos.x);
-		color = 0xFF0000 + (cpy_pos.x > pos.x) * 0x00FF00;
-	}
-	else
-	{
-		pos.y = FLOORING_DU_TURFU(pos.y);
-		color = 0x0000FF + (cpy_pos.y > pos.y) * 0x00FF00;
-	}
-	distance = sqrtf(powf(cpy_pos.x - pos.x, 2) + powf(cpy_pos.y - pos.y, 2));
+	pos = ft_raycast(map, angle, player->pos, &side);
+	type = ft_get_current_block_type(map, pos);
+	color = ft_get_wall_color(side, &pos, player->pos);
+	distance = fast_inverse_square_root((player->pos.x - pos.x)
+	* (player->pos.x - pos.x) + (player->pos.y - pos.y)
+	* (player->pos.y - pos.y));
+	distance = 1 / distance;
 	color = ft_shade_distance(color, distance);
-	distance *= cosf(original_angle - angle);
-	ft_draw_line(x, distance, mlx_data, color);
+	distance *= cosf(player->angle - angle);
+	return ((t_ray){distance, color});
 }
 
-void				ft_raycasting(t_mlx_data *data, t_player *player)
+void						ft_rendering(t_mlx_data *data, t_player *player)
 {
+	t_ray		ray;
 	t_map		*map;
 	uint32_t	i;
 	float		angle;
@@ -128,7 +119,8 @@ void				ft_raycasting(t_mlx_data *data, t_player *player)
 	i = 0;
 	while (i < WINDOW_WIDTH)
 	{
-		raycast(map, i, player->angle, angle, player->pos, data);
+		ray = raycast(map, player, angle);
+		ft_draw_line(i, ray.distance, data, ray.color);
 		angle += delta_angle;
 		i++;
 	}
